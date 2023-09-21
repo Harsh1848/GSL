@@ -8,6 +8,8 @@
         public string Address { get; set; }
         public string UserType { get; set; } // Customer or SalesProvider
         public string Password { get; set; }
+
+        public string Id { get; set; }
     }
 
 }

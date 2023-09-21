@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GSL.Models.GarageModel>
+
+<div class="container">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <button type="submit" class="btn btn-block" style="margin-top: 20px; color: white; background-color: palevioletred; font-weight: bold; font-size: 20px;">Add Garage</button>
+    </div>
+
+    @if (Model.Any())
+    {
+        <table style="margin-top: 20px; width: 100%">
+
+            <tbody style="width: 100%; margin-top: 7px;">
+                @foreach (var garage in Model)
+                {
+                    <tr style="width: 100%; margin-top: 10px;">
+                        <a href="@Url.Action("GarageDetails", "GarageDetails", new { id = garage.Id })" style="color: palevioletred; font-size: 17px; font-weight: bold; padding: 10px; border: solid; border-color: palevioletred; border-width: 2px; width: 100%; border-radius: 10px; display: block; margin-top: 10px;">Address: @garage.Address, @garage.City, @garage.State, @garage.Country</a>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+
+    <div style="position: fixed; bottom: 0; width: 100%; background-color: palevioletred">
+        <ul style="list-style-type: none; padding-top: 10px; padding-bottom: 10px; margin: 0; display: flex; justify-content: space-around">
+            <li style="display: inline-block">
+                <a href="@Url.Action("ProviderHome", "ProviderHome")">Home</a>
+            </li>
+            <li style="display: inline-block">
+                <a href="@Url.Action("Profile", "CustomerHome")">Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>

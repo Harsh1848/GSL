@@ -1,0 +1,48 @@
+﻿@model GSL.ViewModel.GarageViewModel
+
+
+@using (Html.BeginForm("CustomerHome", "CustomerHome", FormMethod.Get))
+{
+    @Html.TextBoxFor(m => m.SearchTerm, new { @style = "padding: 10px; width: 100%;", placeholder = "Search Garages.."})
+    <input type="submit" value="Search" style="background-color: palevioletred; color: white; font-weight: bold; font-size: 17px; padding: 7px; margin-top: 5px;" />
+}
+
+<div class="container">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (Model.GarageList.Any())
+    {
+        <table style="margin-top: 20px; width: 100%">
+
+            <tbody style="width: 100%; margin-top: 7px;">
+                @foreach (var garage in Model.GarageList)
+                {
+                    <tr style="width: 100%; margin-top: 10px;">
+                        <a href="@Url.Action("GarageDetails", "GarageDetails", new { id = garage.Id })" style="color: palevioletred; font-size: 17px; font-weight: bold; padding: 10px; border: solid; border-color: palevioletred; border-width: 2px; width: 100%; border-radius: 10px; display: block; margin-top: 10px;">Address: @garage.Address, @garage.City, @garage.State, @garage.Country</a>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <p>No garages found for "@Model.SearchTerm".</p>
+    }
+
+    <div style="position: fixed; bottom: 0; width: 100%; background-color: palevioletred">
+        <ul style="list-style-type: none; padding-top: 10px; padding-bottom: 10px; margin: 0; display: flex; justify-content: space-around">
+            <li style="display: inline-block">
+                <a href="@Url.Action("CustomerHome", "CustomerHome")">Home</a>
+            </li>
+            <li style="display: inline-block">
+                <a href="@Url.Action("Profile", "CustomerHome")">Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>
