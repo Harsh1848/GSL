@@ -9,23 +9,30 @@
     }
 
     <div style="display: flex; justify-content: center; align-items: center;">
-        <button type="submit" class="btn btn-block" style="margin-top: 20px; color: white; background-color: palevioletred; font-weight: bold; font-size: 20px;">Add Garage</button>
+        @Html.ActionLink("Add Garage", "AddGarage", "ProviderHome", null, new { style = "background-color: palevioletred; color: white; padding: 10px; text-decoration: none; border-radius: 10px; margin: 20px; text-align: center; font-size: 20px;" })
     </div>
 
     @if (Model.Any())
     {
-        <table style="margin-top: 20px; width: 100%">
+        @foreach (var garage in Model)
+        {
+            if (garage != null)
+            {
+                <a href="@Url.Action("GarageDetails", "GarageDetails", new { id = garage.Id })" style="color: palevioletred; font-size: 17px; font-weight: bold; padding: 10px; border: solid; border-color: palevioletred; border-width: 2px; width: 100%; border-radius: 10px; display: block; margin-top: 10px; text-decoration: none;">
+                    
+                    <div style="display: flex; justify-content: space-between">
+                        <div>
+                            <label>Garage Name: @garage.GarageName.ToString()</label>
+                            <div>
+                                Address: @garage.Address, @garage.City, @garage.State, @garage.Country
+                            </div>
+                        </div>
 
-            <tbody style="width: 100%; margin-top: 7px;">
-                @foreach (var garage in Model)
-                {
-                    <tr style="width: 100%; margin-top: 10px;">
-                        <a href="@Url.Action("GarageDetails", "GarageDetails", new { id = garage.Id })" style="color: palevioletred; font-size: 17px; font-weight: bold; padding: 10px; border: solid; border-color: palevioletred; border-width: 2px; width: 100%; border-radius: 10px; display: block; margin-top: 10px;">Address: @garage.Address, @garage.City, @garage.State, @garage.Country</a>
-                    </tr>
-                }
-            </tbody>
-
-        </table>
+                        <button style="background-color: palevioletred; color: white; border-radius: 5px; border: none; padding: 5px 15px;">See Map</button>
+                    </div>
+                </a>
+            }  
+        }
     }
 
     <div style="position: fixed; bottom: 0; width: 100%; background-color: palevioletred">
@@ -34,7 +41,7 @@
                 <a href="@Url.Action("ProviderHome", "ProviderHome")">Home</a>
             </li>
             <li style="display: inline-block">
-                <a href="@Url.Action("Profile", "CustomerHome")">Profile</a>
+                <a href="@Url.Action("Profile", "ProviderHome")">Profile</a>
             </li>
         </ul>
     </div>

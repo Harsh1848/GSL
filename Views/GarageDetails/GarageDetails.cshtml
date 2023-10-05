@@ -1,5 +1,60 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model GSL.ViewModel.GarageDetailsViewModel
+
+<div class="container">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (Model.UserType == "SalesProvider")
+    {
+        <div style="display: flex; justify-content: center; align-items: center;">
+            @Html.ActionLink("Add Item", "AddItem", "AddItem", new { id = Model.GarageId}, new { style = "background-color: palevioletred; color: white; padding: 10px; text-decoration: none; border-radius: 10px; margin: 20px; text-align: center; font-size: 20px;" })
+        </div>
+    }
+
+    <div style="border: solid; border-color: palevioletred; border-width: 1px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; display:flex; flex-direction: column; font-weight: bold">
+        <label style="color: palevioletred; font-size: 15px;">Garage Name: @Model.Garage.GarageName</label>
+        <label style="color: palevioletred; font-size: 15px;">Garage Address: @Model.Garage.Address</label>
+        <label style="color: palevioletred; font-size: 15px;">Owner Name: @Model.Garage.OwnerName</label>
+        <label style="color: palevioletred; font-size: 15px;">Owner Phone Number: @Model.Garage.OwnerPhoneNumber</label>
+        
+    </div>
+
+    @if (Model.GarageItemList.Any())
+    {
+        @foreach (var item in Model.GarageItemList)
+        {
+            if (item != null)
+            {
+                    <div style="color: palevioletred; font-size: 17px; font-weight: bold; padding: 10px; border: solid; border-color: palevioletred; border-width: 2px; width: 100%; border-radius: 10px; display: block; margin-top: 10px; text-decoration: none;">
+                        <div style="display: flex; justify-content: space-between">
+                            <div>
+                                <label>Item Name: @item.ItemName.ToString()</label>
+                                <div>
+                                    Item Price: @item.ItemPrice
+                                </div>
+                            </div>
+
+                            <label>Selling End Date: @item.ItemSellingEndDate</label>
+                        </div>
+                    </div>
+             
+            }
+        }
+    }
+
+    <div style="position: fixed; bottom: 0; width: 100%; background-color: palevioletred">
+        <ul style="list-style-type: none; padding-top: 10px; padding-bottom: 10px; margin: 0; display: flex; justify-content: space-around">
+            <li style="display: inline-block">
+                <a href="@Url.Action("ProviderHome", "ProviderHome")">Home</a>
+            </li>
+            <li style="display: inline-block">
+                <a href="@Url.Action("Profile", "ProviderHome")">Profile</a>
+            </li>
+        </ul>
+    </div>
+</div>
+

@@ -3,6 +3,7 @@ using GSL.Models;
 using GSL.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace GSL.Controllers
 {
@@ -14,7 +15,8 @@ namespace GSL.Controllers
             var garages = await firebaseClient.Child("garage").OnceAsync<GarageModel>();
             var garageList = garages.Select(item => new GarageModel
             {
-                Id = item.Object.Id,
+                Id = item.Key,
+                GarageName = item.Object.GarageName,
                 Address = item.Object.Address,
                 City = item.Object.City,
                 State = item.Object.State,
@@ -24,6 +26,14 @@ namespace GSL.Controllers
                 OwnerPhoneNumber = item.Object.OwnerPhoneNumber,
             }).ToList();
 
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1),
+                HttpOnly = true
+            };
+
+            Response.Cookies.Append("garage_list", JsonConvert.SerializeObject(garageList), cookieOptions);
+            
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 garageList = garageList.Where(f => f.Address.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -31,7 +41,7 @@ namespace GSL.Controllers
             var viewModel = new GarageViewModel
             {
                 GarageList = garageList,
-                SearchTerm = searchTerm
+                SearchTerm = searchTerm,
             };
             return View(viewModel);
         }

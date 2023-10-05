@@ -31,9 +31,9 @@ namespace GSL.Controllers
                 var firebaseClient = new FirebaseClient("https://gslocator-6b655-default-rtdb.firebaseio.com");
                 var users = firebaseClient.Child("users");
 
-                _ = users.Child(userId).PutAsync(model);
-
                 model.Id = userId;
+
+                _ = users.Child(userId).PutAsync(model);
 
                 TempData["User"] = JsonConvert.SerializeObject(model);
 

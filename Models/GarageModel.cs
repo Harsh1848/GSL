@@ -2,6 +2,7 @@
 {
     public class GarageModel
     {
+        public string GarageName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string State { get; set; }
@@ -12,5 +13,7 @@
         public string OwnerPhoneNumber { get; set; }
 
         public string Id { get; set; }
+
+        public List<GarageItemModel> GarageItemModel { get; set; }
     }
 }
