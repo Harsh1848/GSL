@@ -76,6 +76,7 @@ namespace GSL.Controllers
                         Email = users.Email,
                         Password = users.Password,
                         PhoneNumber = users.PhoneNumber,
+                        Address = users.Address,
                         Id = users.Id,
                         UserType = users.UserType
                     };
